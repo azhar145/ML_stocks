@@ -13,33 +13,14 @@ xx='tsla'
 #read the data file
 ##df = pd.read_csv('D:\\python3\\data\\SensexHistoricalData.csv')
 df = yf.download(xx, start='2010-01-01', end=(pd.to_datetime('today')), progress=False, auto_adjust = True)
-##df.reset_index(inplace=True,drop=True)
+df.reset_index(inplace=True)
 print(df)
 #setting index as date
-##df['Date'] = pd.to_datetime(df.Date)
-##df.index = df['Date']
+df['Date'] = pd.to_datetime(df.Date)
+df.index = df['Date']
 df['status']='Actual'
-
-
-#setting index as date
-##df['Date'] = pd.to_datetime(df.Date)
-##df.index = df['Date']
-
 #converting dates into number of days as dates cannot be passed directly to any regression model
-##df.index = (df.index - pd.to_datetime('1970-01-01')).days
-
-
-import sys
-print(df)
-
-##sys.exit()
-
-
-##
-##
-##
-###converting dates into number of days as dates cannot be passed directly to any regression model
-##df.index = (df.index - pd.to_datetime('1970-01-01')).days
+df.index = (df.index - pd.to_datetime('1970-01-01')).days
 print(df.shape)
 # Convert the pandas series into numpy array, we need to further massage it before sending it to regression model
 y = np.asarray(df['Close'])
@@ -126,7 +107,7 @@ for x in dq.index:
     dq['Date'].loc[x]=pd.to_datetime(df['Date'][-1]+timedelta(x+1)).date()
     dq['Volume'].loc[x]=int(dq['Volume'].loc[x])
     k=k+1
-##    df['Datep'].loc[x] = pd.to_datetime(df['Datep'].loc[x]).dt.
+####    df['Datep'].loc[x] = pd.to_datetime(df['Datep'].loc[x]).dt.
 
 ##dq['Datepx']=pd.to_datetime(df['Datep']).dt.date
 
@@ -135,11 +116,10 @@ dq=dq[['Date','Open','High','Low','Close','Volume','status']]
    
 print(dq,'  dq')
 
-##date.today()+timedelta(1)
-df.reset_index(inplace=True,drop=True)
-df.set_index('Date',inplace=True)
+date.today()+timedelta(1)
 
 
+sys.exit()
 
 #convert the days index back to dates index for plotting the graph
 x = pd.to_datetime(df.index, origin='1970-01-01', unit='D')
